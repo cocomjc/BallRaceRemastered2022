@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RoadSpawn
   - Obstacle
+  - Ramp
   layers:
   - Default
   - TransparentFX

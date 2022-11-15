@@ -16,14 +16,14 @@ public class RoadsManager : Singleton<RoadsManager>
         for (int i = 0; i < numberOfRoads; i++)
         {
             GameObject newRoad = Instantiate(roadPrefab, new Vector3(0, 0, i * roadOffsetf), Quaternion.identity);
-            roads.Add(newRoad.GetComponent<Road>());
-            roads[roads.Count - 1].transform.SetParent(this.transform);
-            //Debug.Log("Instatiating Road at " + i * roadOffsetf);
             if (i > 2)
             {
                 //Debug.Log("Loading obstacles for road " + i);
-                roads[roads.Count - 1].LoadNewObstacles();
+                newRoad.GetComponent<Road>().LoadNewObstacles();
             }
+            roads.Add(newRoad.GetComponent<Road>());
+            roads[roads.Count - 1].transform.SetParent(this.transform);
+            //Debug.Log("Instatiating Road at " + i * roadOffsetf);
         }
     }
 
@@ -35,5 +35,12 @@ public class RoadsManager : Singleton<RoadsManager>
         movedRoad.transform.position = new Vector3(0, 0, newZ);
         movedRoad.LoadNewObstacles();
         roads.Add(movedRoad);
+    }
+
+    public Road GetLastRoad()
+    {
+        if (roads.Count <= 0)
+            return null;
+        return (roads[roads.Count - 1]);
     }
 }

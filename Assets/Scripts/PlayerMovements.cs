@@ -77,5 +77,9 @@ public class PlayerMovements : MonoBehaviour
         {
             gameManager.Death();
         }
+        if (hit.gameObject.CompareTag("Ramp"))
+        {
+            verticalVelocity = 10f;
+        }
     }
 }
