@@ -1,37 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.Device;
-using UnityEngine.InputSystem.XR;
 
 public class PlayerMovements : MonoBehaviour
 {
     private PlayerControls playerInput;
-    [SerializeField]
-    private float forwardSpeed = 20f;
-    [SerializeField]
-    private float lateralSpeed = 20f;
-    [SerializeField]
-    private float mass = 1f;
     private CharacterController controller;
     private float verticalVelocity;
     private float gravityValue = 9.81f;
+    private bool isPaused = false;
+    [SerializeField] private float forwardSpeed = 20f;
+    [SerializeField] private float lateralSpeed = 20f;
+    [SerializeField] private float mass = 1f;
 
-    private RoadsManager roadsManager;
-    private GameManager gameManager;
-
+    
     private void Awake()
     {
         playerInput = new PlayerControls();
         controller = GetComponent<CharacterController>();
     }
-    
-    private void Start()
-    {
-        roadsManager = RoadsManager.GetInstance();
-        gameManager = GameManager.GetInstance();
-    }
-    
+        
     private void OnEnable()
     {
         playerInput.Enable();
@@ -50,36 +38,31 @@ public class PlayerMovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool groundedPlayer = controller.isGrounded;
-
-        // slam into the ground
-        if (groundedPlayer && verticalVelocity < 0)
+        if (!isPaused)
         {
-            // hit ground
-            verticalVelocity = 0f;
-        }
-        verticalVelocity -= gravityValue * Time.deltaTime * mass;
-        //Debug.Log(GetNormalizedfDirection());
-        controller.Move(new Vector3(GetNormalizedfDirection() * lateralSpeed, verticalVelocity, 1 * forwardSpeed) * Time.deltaTime);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("RoadSpawn"))
-        {
-            roadsManager.MoveRoad();
+            if (controller.isGrounded && verticalVelocity < 0)
+                verticalVelocity = 0f;
+            verticalVelocity -= gravityValue * Time.deltaTime * mass;
+            //Debug.Log(GetNormalizedfDirection());
+            controller.Move(new Vector3(GetNormalizedfDirection() * lateralSpeed, verticalVelocity, 1 * forwardSpeed) * Time.deltaTime);
         }
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    public void Boost()
     {
-        if (hit.gameObject.CompareTag("Obstacle"))
+        verticalVelocity = 10f;
+    }
+
+    public void SetPaused(bool paused)
+    {      
+        isPaused = paused;
+        if (paused)
         {
-            gameManager.Death();
+            playerInput.Disable();
         }
-        if (hit.gameObject.CompareTag("Ramp"))
+        else
         {
-            verticalVelocity = 10f;
+            playerInput.Enable();
         }
     }
 }
