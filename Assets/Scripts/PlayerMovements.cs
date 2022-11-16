@@ -9,11 +9,13 @@ public class PlayerMovements : MonoBehaviour
     private float verticalVelocity;
     private float gravityValue = 9.81f;
     private bool isPaused = false;
+    private float slowFactor = 0f;
     [SerializeField] private float forwardSpeed = 20f;
     [SerializeField] private float lateralSpeed = 20f;
+    [SerializeField] private float jumpForce = 15f;
     [SerializeField] private float mass = 1f;
 
-    
+
     private void Awake()
     {
         playerInput = new PlayerControls();
@@ -40,17 +42,30 @@ public class PlayerMovements : MonoBehaviour
     {
         if (!isPaused)
         {
+            if (slowFactor > 0)
+            {
+                slowFactor -= Time.deltaTime * 10;
+                Debug.Log(slowFactor);
+            }
+            else
+            {
+                slowFactor = 0;
+            }
             if (controller.isGrounded && verticalVelocity < 0)
                 verticalVelocity = 0f;
             verticalVelocity -= gravityValue * Time.deltaTime * mass;
             //Debug.Log(GetNormalizedfDirection());
-            controller.Move(new Vector3(GetNormalizedfDirection() * lateralSpeed, verticalVelocity, 1 * forwardSpeed) * Time.deltaTime);
+            controller.Move(new Vector3(GetNormalizedfDirection() * lateralSpeed, verticalVelocity, 1 * (forwardSpeed - slowFactor)) * Time.deltaTime);
         }
+    }
+
+    public void SlowPlayer() {
+        slowFactor = forwardSpeed - 4f;
     }
 
     public void Boost()
     {
-        verticalVelocity = 10f;
+        verticalVelocity = jumpForce;
     }
 
     public void SetPaused(bool paused)

@@ -10,8 +10,8 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         gameState = GameState.Menu;
-        //SceneManager.LoadScene("GameScene", LoadSceneMode.Additive);
-        //SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
+//        SceneManager.LoadScene("GameScene", LoadSceneMode.Additive);
+//        SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
     }
 
     public void StartGame()
@@ -29,9 +29,9 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
     }
 
-    public void EndGame()
+    public void EndGame(int collectedDiamons)
     {
-        Debug.Log("Game End");
+        Debug.Log("Game End with " + collectedDiamons + " diamonds");
         gameState = GameState.End;
         ResetScene();
     }
