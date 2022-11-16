@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI diamondsText;
     [SerializeField] private int lifes;
     private int runDiamonds;
+    private float endBonus = 1;
 
     private void Start()
     {
@@ -48,11 +49,16 @@ public class PlayerManager : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
+        if (other.CompareTag("FinishLine") && gameManager.GetGameState() == GameState.Game)
+        {
+            gameManager.SetGameState(GameState.End);
+            EndBehavior();
+        }
     }
 
     private void UpdateDiamondsCount()
     {
-        diamondsText.text = "Diamonds: " + runDiamonds;
+        diamondsText.text = "Diamonds: " + (PlayerPrefs.GetInt("Diamonds") + runDiamonds);
     }
 
     private void UpdateLifeCount()
@@ -62,9 +68,18 @@ public class PlayerManager : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if (hit.gameObject.CompareTag("EndBonus"))
+        {
+            endBonus = hit.gameObject.GetComponent<EndBonus>().GetBonus();
+            if (!(lifes > 1))
+            {
+                GetComponent<PlayerMovements>().SetPaused(true);
+                //Wait for a second
+            }
+        }
         if (hit.gameObject.CompareTag("Obstacle"))
         {
-            if (lifes > 0)
+            if (lifes > 1)
             {
                 Debug.Log("Hit Obstacle to destroy removing a life");
                 // Get the parent of the obstacle
@@ -74,14 +89,20 @@ public class PlayerManager : MonoBehaviour
                 UpdateLifeCount();
                 GetComponent<PlayerMovements>().SlowPlayer();
             }
-            else
+            else if (gameManager.GetGameState() == GameState.Game)
             {
-                gameManager.EndGame(runDiamonds);
+                gameManager.EndGame(runDiamonds, false);
             }
         }
         if (hit.gameObject.CompareTag("Ramp"))
         {
             GetComponent<PlayerMovements>().Boost();
         }
+    }
+
+    private void EndBehavior()
+    {
+        GetComponent<PlayerMovements>().TriggerEnd();
+        //gameManager.EndGame(runDiamonds, true);
     }
 }

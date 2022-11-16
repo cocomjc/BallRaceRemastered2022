@@ -8,7 +8,7 @@ public class PlayerMovements : MonoBehaviour
     private CharacterController controller;
     private float verticalVelocity;
     private float gravityValue = 9.81f;
-    private bool isPaused = false;
+    private MovementState movementState = MovementState.Playing;
     private float slowFactor = 0f;
     [SerializeField] private float forwardSpeed = 20f;
     [SerializeField] private float lateralSpeed = 20f;
@@ -40,23 +40,32 @@ public class PlayerMovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isPaused)
+        switch (movementState)
         {
-            if (slowFactor > 0)
-            {
-                slowFactor -= Time.deltaTime * 10;
-                Debug.Log(slowFactor);
-            }
-            else
-            {
-                slowFactor = 0;
-            }
-            if (controller.isGrounded && verticalVelocity < 0)
-                verticalVelocity = 0f;
-            verticalVelocity -= gravityValue * Time.deltaTime * mass;
-            //Debug.Log(GetNormalizedfDirection());
-            controller.Move(new Vector3(GetNormalizedfDirection() * lateralSpeed, verticalVelocity, 1 * (forwardSpeed - slowFactor)) * Time.deltaTime);
+            case MovementState.Playing:
+                Move();
+                break;
+            case MovementState.End:
+                EndBehavior();
+                break;
         }
+    }
+
+    private void Move()
+    {
+        if (slowFactor > 0)
+        {
+            slowFactor -= Time.deltaTime * 10;
+            Debug.Log(slowFactor);
+        }
+        else
+        {
+            slowFactor = 0;
+        }
+        if (controller.isGrounded && verticalVelocity < 0)
+            verticalVelocity = 0f;
+        verticalVelocity -= gravityValue * Time.deltaTime * mass;
+        controller.Move(new Vector3(GetNormalizedfDirection() * lateralSpeed, verticalVelocity, 1 * (forwardSpeed - slowFactor)) * Time.deltaTime);
     }
 
     public void SlowPlayer() {
@@ -70,14 +79,33 @@ public class PlayerMovements : MonoBehaviour
 
     public void SetPaused(bool paused)
     {      
-        isPaused = paused;
         if (paused)
         {
+            movementState = MovementState.Paused;
             playerInput.Disable();
         }
         else
         {
+            movementState = MovementState.Playing;
             playerInput.Enable();
         }
+    }
+
+    public void TriggerEnd()
+    {
+        movementState = MovementState.End;
+        playerInput.Disable();
+    }
+
+    private void EndBehavior()
+    {
+        controller.Move(new Vector3(Mathf.Abs(transform.position.x) > .3 ? -transform.position.x * .05f : 0, 0, 1 * forwardSpeed * Time.deltaTime));
+    }
+
+    private enum MovementState
+    {
+        Paused,
+        Playing,
+        End
     }
 }

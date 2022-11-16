@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject endMenu;
     [SerializeField] private GameObject shopMenu;
+    [SerializeField] private TextMeshProUGUI levelText;
 
 
     private void Awake()
@@ -20,6 +22,7 @@ public class MenuManager : MonoBehaviour
         {
             case (GameState.Menu):
                 mainMenu.SetActive(true);
+//                levelText.text = "Level: " + PlayerPrefs.GetInt("Level");
                 break;
             case (GameState.End):
                 endMenu.SetActive(true);
@@ -49,6 +52,7 @@ public class MenuManager : MonoBehaviour
         gameManager.SetGameState(GameState.Menu);
         endMenu.SetActive(false);
         mainMenu.SetActive(true);
+        levelText.text = "Level: " + PlayerPrefs.GetInt("Level");
         Debug.Log("Going to main menu");
     }
 

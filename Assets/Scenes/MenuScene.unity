@@ -1143,6 +1143,7 @@ MonoBehaviour:
   mainMenu: {fileID: 1852967477}
   endMenu: {fileID: 888496661}
   shopMenu: {fileID: 2063501161}
+  levelText: {fileID: 15874332}
 --- !u!1 &1344498450
 GameObject:
   m_ObjectHideFlags: 0

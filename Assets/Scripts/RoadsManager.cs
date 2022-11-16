@@ -9,14 +9,19 @@ public class RoadsManager : Singleton<RoadsManager>
     [SerializeField] private float roadOffsetf = 30;
     [SerializeField] private int numberOfRoads = 5;
     [SerializeField] private GameObject roadPrefab;
+    [SerializeField] private GameObject finishPrefab;
+    private GameObject finishRoad = null;
+    private int totalOfSpawnedRoads = 0;
+    private int maxNumberOfRoads = 0;
 
     protected override void Awake()
     {
         base.Awake();
-        for (int i = 0; i < numberOfRoads; i++)
+        maxNumberOfRoads = (PlayerPrefs.GetInt("Level") - 1) * 2 + 5;
+        for (int i = 0; i < numberOfRoads && i <  maxNumberOfRoads; i++)
         {
             GameObject newRoad = Instantiate(roadPrefab, new Vector3(0, 0, i * roadOffsetf), Quaternion.identity);
-            if (i > 2)
+            if (i > 1) //leave the first 2 roads empty
             {
                 //Debug.Log("Loading obstacles for road " + i);
                 newRoad.GetComponent<Road>().LoadNewObstacles();
@@ -24,17 +29,26 @@ public class RoadsManager : Singleton<RoadsManager>
             roads.Add(newRoad.GetComponent<Road>());
             roads[roads.Count - 1].transform.SetParent(this.transform);
             //Debug.Log("Instatiating Road at " + i * roadOffsetf);
+            totalOfSpawnedRoads++;
         }
     }
 
     public void MoveRoad()
     {
-        Road movedRoad = roads[0];
-        roads.Remove(movedRoad);
-        float newZ = roads[roads.Count - 1].transform.position.z + roadOffsetf;
-        movedRoad.transform.position = new Vector3(0, 0, newZ);
-        movedRoad.LoadNewObstacles();
-        roads.Add(movedRoad);
+        if (totalOfSpawnedRoads <=  maxNumberOfRoads)
+        {
+            Road movedRoad = roads[0];
+            roads.Remove(movedRoad);
+            float newZ = roads[roads.Count - 1].transform.position.z + roadOffsetf;
+            movedRoad.transform.position = new Vector3(0, 0, newZ);
+            movedRoad.LoadNewObstacles();
+            roads.Add(movedRoad);
+            totalOfSpawnedRoads++;
+        }
+        else if (!finishRoad) {
+            finishRoad = Instantiate(finishPrefab, new Vector3(0, 0, roads[roads.Count - 1].transform.position.z + roadOffsetf), Quaternion.identity);
+            finishRoad.transform.SetParent(this.transform.parent.transform);
+        }
     }
 
     public Road GetLastRoad()

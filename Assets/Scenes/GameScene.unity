@@ -805,6 +805,8 @@ MonoBehaviour:
   numberOfRoads: 10
   roadPrefab: {fileID: 7103616950141649423, guid: 034774b29fb035449ab0980b8c12004c,
     type: 3}
+  finishPrefab: {fileID: 3232441615826082929, guid: c491e071645c62b4ba2b1a78bbaebe59,
+    type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,6 +1190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardSpeed: 15
   lateralSpeed: 700
+  jumpForce: 15
   mass: 5
 --- !u!143 &1309231035
 CharacterController:

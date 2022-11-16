@@ -6,6 +6,18 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     private GameState gameState;
+    [SerializeField] private bool resetEachLaunchMode;
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+        if (resetEachLaunchMode)
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.SetInt("Level", 1);
+        }
+    }
     
     private void Start()
     {
@@ -29,9 +41,15 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
     }
 
-    public void EndGame(int collectedDiamons)
+    public void EndGame(int collectedDiamons, bool win)
     {
+        if (win)
+        {
+            int level = PlayerPrefs.GetInt("Level");
+            PlayerPrefs.SetInt("Level", level + 1);
+        }
         Debug.Log("Game End with " + collectedDiamons + " diamonds");
+        PlayerPrefs.SetInt("Diamonds", collectedDiamons + PlayerPrefs.GetInt("Diamonds"));
         gameState = GameState.End;
         ResetScene();
     }

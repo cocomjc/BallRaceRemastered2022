@@ -8,6 +8,8 @@ TagManager:
   - Obstacle
   - Ramp
   - Gatherable
+  - FinishLine
+  - EndBonus
   layers:
   - Default
   - TransparentFX
