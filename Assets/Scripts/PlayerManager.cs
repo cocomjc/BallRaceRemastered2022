@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Cinemachine;
 
 public class PlayerManager : MonoBehaviour
 {
     private RoadsManager roadsManager;
     private GameManager gameManager;
+    [SerializeField] private CinemachineVirtualCamera followingCam;
+    [SerializeField] private CinemachineVirtualCamera endCam;
     [SerializeField] private TextMeshProUGUI lifesText;
     [SerializeField] private TextMeshProUGUI diamondsText;
     [SerializeField] private int lifes;
@@ -20,6 +23,19 @@ public class PlayerManager : MonoBehaviour
         GetComponent<PlayerMovements>().SetPaused(true);
         UpdateDiamondsCount();
         UpdateLifeCount();
+        CameraSwitcher.SwitchCamera(followingCam);
+    }
+
+    private void OnEnable()
+    {
+        CameraSwitcher.Register(followingCam);
+        CameraSwitcher.Register(followingCam);
+    }
+
+    private void OnDisable()
+    {
+        CameraSwitcher.Unregister(followingCam);
+        CameraSwitcher.Unregister(endCam);
     }
 
     public void StartGame()
@@ -52,7 +68,18 @@ public class PlayerManager : MonoBehaviour
         if (other.CompareTag("FinishLine") && gameManager.GetGameState() == GameState.Game)
         {
             gameManager.SetGameState(GameState.End);
-            EndBehavior();
+            CameraSwitcher.SwitchCamera(endCam);
+            GetComponent<PlayerMovements>().TriggerEnd();
+        }
+        if (other.gameObject.CompareTag("EndBonus"))
+        {
+            endBonus = other.gameObject.GetComponent<EndBonus>().GetBonus();
+            Debug.Log("Bonus set to " + endBonus);
+            if (lifes < 1)
+            {
+                StartCoroutine(GoToEndMenu(1f));
+                GetComponent<PlayerMovements>().SetPaused(true);
+            }
         }
     }
 
@@ -68,18 +95,9 @@ public class PlayerManager : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.CompareTag("EndBonus"))
-        {
-            endBonus = hit.gameObject.GetComponent<EndBonus>().GetBonus();
-            if (!(lifes > 1))
-            {
-                GetComponent<PlayerMovements>().SetPaused(true);
-                //Wait for a second
-            }
-        }
         if (hit.gameObject.CompareTag("Obstacle"))
         {
-            if (lifes > 1)
+            if (lifes >= 1)
             {
                 Debug.Log("Hit Obstacle to destroy removing a life");
                 // Get the parent of the obstacle
@@ -91,7 +109,7 @@ public class PlayerManager : MonoBehaviour
             }
             else if (gameManager.GetGameState() == GameState.Game)
             {
-                gameManager.EndGame(runDiamonds, false);
+                gameManager.EndGame(runDiamonds, endBonus);
             }
         }
         if (hit.gameObject.CompareTag("Ramp"))
@@ -100,9 +118,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void EndBehavior()
+    private IEnumerator GoToEndMenu (float _delay)
     {
-        GetComponent<PlayerMovements>().TriggerEnd();
-        //gameManager.EndGame(runDiamonds, true);
+        yield return new WaitForSeconds(_delay);
+        gameManager.EndGame(runDiamonds, endBonus);
     }
 }

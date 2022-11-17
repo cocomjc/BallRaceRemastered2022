@@ -22,7 +22,6 @@ public class MenuManager : MonoBehaviour
         {
             case (GameState.Menu):
                 mainMenu.SetActive(true);
-//                levelText.text = "Level: " + PlayerPrefs.GetInt("Level");
                 break;
             case (GameState.End):
                 endMenu.SetActive(true);

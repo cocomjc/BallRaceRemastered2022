@@ -7,6 +7,8 @@ public class GameManager : Singleton<GameManager>
 {
     private GameState gameState;
     [SerializeField] private bool resetEachLaunchMode;
+    private float lastRunBonus = 1;
+    private int lastRunDiamonds = 0;
 
 
     protected override void Awake()
@@ -22,8 +24,8 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         gameState = GameState.Menu;
-//        SceneManager.LoadScene("GameScene", LoadSceneMode.Additive);
-//        SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("GameScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
     }
 
     public void StartGame()
@@ -41,15 +43,15 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
     }
 
-    public void EndGame(int collectedDiamons, bool win)
+    public void EndGame(int runDiamonds, float bonus)
     {
-        if (win)
+        lastRunDiamonds = runDiamonds;
+        lastRunBonus = bonus;
+        if (lastRunBonus > 1)
         {
-            int level = PlayerPrefs.GetInt("Level");
-            PlayerPrefs.SetInt("Level", level + 1);
+            PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
         }
-        Debug.Log("Game End with " + collectedDiamons + " diamonds");
-        PlayerPrefs.SetInt("Diamonds", collectedDiamons + PlayerPrefs.GetInt("Diamonds"));
+        Debug.Log("Game Ended with " + runDiamonds + " diamonds");
         gameState = GameState.End;
         ResetScene();
     }
@@ -58,9 +60,19 @@ public class GameManager : Singleton<GameManager>
     {
         return (gameState);
     }
+    
     public void SetGameState(GameState state)
     {
         gameState = state;
+    }
+
+    public int GetLastRunDiamonds() {
+        return (lastRunDiamonds);
+    }
+
+    public float GetLastRunBonus()
+    {
+        return (lastRunBonus);
     }
 }
 
