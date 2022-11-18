@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviour
                     UpdateLifeCount();
                     break;
             }
-            Destroy(other.gameObject);
+            other.GetComponent<Gatherable>().TriggerGathered();
         }
         if (other.CompareTag("FinishLine") && gameManager.GetGameState() == GameState.Game)
         {
@@ -85,7 +85,7 @@ public class PlayerManager : MonoBehaviour
 
     private void UpdateDiamondsCount()
     {
-        diamondsText.text = "Diamonds: " + (PlayerPrefs.GetInt("Diamonds") + runDiamonds);
+        diamondsText.text = (PlayerPrefs.GetInt("Diamonds") + runDiamonds).ToString();
     }
 
     private void UpdateLifeCount()

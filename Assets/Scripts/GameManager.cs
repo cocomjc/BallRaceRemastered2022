@@ -24,6 +24,11 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         gameState = GameState.Menu;
+        if (SceneManager.sceneCount > 1)
+        {
+            SceneManager.UnloadSceneAsync("MenuScene");
+            SceneManager.UnloadSceneAsync("GameScene");
+        }
         SceneManager.LoadScene("GameScene", LoadSceneMode.Additive);
         SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
     }

@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "22241FDEE002B5",
         "name": "com.DefaultCompany.BallRaceRemastered2022",
-        "processId": 17990,
+        "processId": 27268,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -96,6 +96,42 @@
             "deviceId": "22241FDEE002B5",
             "name": "com.DefaultCompany.BallRaceRemastered2022",
             "processId": 17990,
+            "exited": false
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 18321,
+            "exited": false
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 29311,
+            "exited": false
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 29650,
+            "exited": false
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 30116,
+            "exited": false
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 17024,
+            "exited": false
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 27268,
             "exited": false
         }
     ],

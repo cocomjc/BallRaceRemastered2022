@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovements : MonoBehaviour
@@ -34,7 +35,7 @@ public class PlayerMovements : MonoBehaviour
 
     public float GetNormalizedfDirection()
     {
-        return playerInput.Player.Move.ReadValue<Vector2>().x / Screen.width;
+        return playerInput.Player.Move.ReadValue<Vector2>().x * (CameraSizePortrait().x / Screen.width);
     }
 
     // Update is called once per frame
@@ -56,7 +57,7 @@ public class PlayerMovements : MonoBehaviour
         if (slowFactor > 0)
         {
             slowFactor -= Time.deltaTime * 10;
-            Debug.Log(slowFactor);
+            Debug.Log("slow factor: " + slowFactor);
         }
         else
         {
@@ -101,6 +102,26 @@ public class PlayerMovements : MonoBehaviour
     private void EndBehavior()
     {
         controller.Move(new Vector3(Mathf.Abs(transform.position.x) > .3 ? -transform.position.x * .05f : 0, 0, 1 * forwardSpeed * Time.deltaTime));
+    }
+
+    private Vector2 CameraSizePortrait()
+    {
+        if (-4.99f < Mathf.Abs(Screen.height / 16 - Screen.width / 9) && Mathf.Abs(Screen.height / 16 - Screen.width / 9) < 4.99f)
+        {
+            Debug.Log("16:9");
+            return new Vector2(Camera.main.orthographicSize * 2 / 16 * 9, Camera.main.orthographicSize * 2);
+        }
+        else if (-4.99f < Mathf.Abs(Screen.height / 18 - Screen.width / 9) && Mathf.Abs(Screen.height / 18 - Screen.width / 9) < 4.99f)
+        {
+            Debug.Log("18:9");
+            return new Vector2(Camera.main.orthographicSize * 2 / 18 * 9, Camera.main.orthographicSize * 2);
+        }
+        else if (-4.99f < Mathf.Abs(Screen.height / 19 - Screen.width / 9) && Mathf.Abs(Screen.height / 19 - Screen.width / 9) < 4.99f)
+        {
+            Debug.Log("19:9");
+            return new Vector2(Camera.main.orthographicSize * 2 / 19 * 9, Camera.main.orthographicSize * 2);
+        }
+        else Debug.Log("Screen proportions not recognized"); return new Vector2(Screen.width, Screen.height);
     }
 
     private enum MovementState
