@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 0c8c16b4e73651a4687cfcb7ae6ccfe1
+guid: 17a0d25c129155645a402ba3b9d6832f
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: barrier1
+    second: {fileID: 2800000, guid: d12c0de49995d0d45a988debbaa352c3, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

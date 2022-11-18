@@ -96,7 +96,6 @@ public class PlayerMovements : MonoBehaviour
     {
         movementState = MovementState.End;
         playerInput.Disable();
-        forwardSpeed /= 2;
     }
 
     private void EndBehavior()

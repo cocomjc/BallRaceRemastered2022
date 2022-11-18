@@ -74,7 +74,7 @@ public class PlayerManager : MonoBehaviour
         if (other.gameObject.CompareTag("EndBonus"))
         {
             endBonus = other.gameObject.GetComponent<EndBonus>().GetBonus();
-            Debug.Log("Bonus set to " + endBonus);
+            other.gameObject.GetComponent<EndBonus>().TriggerBonus();
             if (lifes < 1)
             {
                 StartCoroutine(GoToEndMenu(1f));
