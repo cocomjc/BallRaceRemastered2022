@@ -107,20 +107,20 @@ public class PlayerMovements : MonoBehaviour
     {
         if (-4.99f < Mathf.Abs(Screen.height / 16 - Screen.width / 9) && Mathf.Abs(Screen.height / 16 - Screen.width / 9) < 4.99f)
         {
-            Debug.Log("16:9");
+            //Debug.Log("16:9");
             return new Vector2(Camera.main.orthographicSize * 2 / 16 * 9, Camera.main.orthographicSize * 2);
         }
         else if (-4.99f < Mathf.Abs(Screen.height / 18 - Screen.width / 9) && Mathf.Abs(Screen.height / 18 - Screen.width / 9) < 4.99f)
         {
-            Debug.Log("18:9");
+            //Debug.Log("18:9");
             return new Vector2(Camera.main.orthographicSize * 2 / 18 * 9, Camera.main.orthographicSize * 2);
         }
         else if (-4.99f < Mathf.Abs(Screen.height / 19 - Screen.width / 9) && Mathf.Abs(Screen.height / 19 - Screen.width / 9) < 4.99f)
         {
-            Debug.Log("19:9");
+            //Debug.Log("19:9");
             return new Vector2(Camera.main.orthographicSize * 2 / 19 * 9, Camera.main.orthographicSize * 2);
         }
-        else Debug.Log("Screen proportions not recognized"); return new Vector2(Screen.width, Screen.height);
+        else /*Debug.Log("Screen proportions not recognized");*/ return new Vector2(Screen.width, Screen.height);
     }
 
     private enum MovementState

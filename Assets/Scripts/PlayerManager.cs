@@ -74,10 +74,10 @@ public class PlayerManager : MonoBehaviour
         if (other.gameObject.CompareTag("EndBonus"))
         {
             endBonus = other.gameObject.GetComponent<EndBonus>().GetBonus();
-            other.gameObject.GetComponent<EndBonus>().TriggerBonus();
             if (lifes < 1)
             {
-                StartCoroutine(GoToEndMenu(1f));
+                other.gameObject.GetComponent<EndBonus>().TriggerBonus();
+                StartCoroutine(GoToEndMenu(3f));
                 GetComponent<PlayerMovements>().SetPaused(true);
             }
         }
