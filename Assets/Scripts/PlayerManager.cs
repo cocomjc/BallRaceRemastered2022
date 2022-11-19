@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private int lifes;
     private int runDiamonds;
     private float endBonus = 1;
+    private bool invincibility = false;
 
     private void Start()
     {
@@ -95,17 +96,16 @@ public class PlayerManager : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.CompareTag("Obstacle"))
+        if (hit.gameObject.CompareTag("Obstacle") && !invincibility)
         {
             if (lifes >= 1)
             {
-                Debug.Log("Hit Obstacle to destroy removing a life");
-                // Get the parent of the obstacle
-                Destroy(hit.gameObject);
-                //Transform obstacleParent = hit.gameObject.transform.parent;
                 lifes--;
                 UpdateLifeCount();
+                hit.gameObject.GetComponent<BarrierBehavior>().BurstBarrier();
                 GetComponent<PlayerMovements>().SlowPlayer();
+                invincibility = true;
+                StartCoroutine(InvincibilityTimer(.2f));
             }
             else if (gameManager.GetGameState() == GameState.Game)
             {
@@ -116,6 +116,12 @@ public class PlayerManager : MonoBehaviour
         {
             GetComponent<PlayerMovements>().Boost();
         }
+    }
+
+    private IEnumerator InvincibilityTimer(float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        invincibility = false;
     }
 
     private IEnumerator GoToEndMenu (float _delay)
