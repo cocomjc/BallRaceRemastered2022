@@ -3,7 +3,22 @@ guid: a624e3b792be50c4081ded7f11799563
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Arrow
+    second: {fileID: 2100000, guid: 948f1a4afd48abd47bf0c4fbe708ddb1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ramp
+    second: {fileID: 2100000, guid: ac0b92f56a00ac5459b915cd3c5f6cd4, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: ramp
+    second: {fileID: 2800000, guid: e4d2dde6effd5444f8d649743c7a9d09, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

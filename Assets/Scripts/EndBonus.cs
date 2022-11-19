@@ -19,7 +19,7 @@ public class EndBonus : MonoBehaviour
     {
         Renderer rend = GetComponent<Renderer>();
 
-        rend.material = new Material(Shader.Find("Specular"));
+        //rend.material = new Material(Shader.Find("Specular"));
         int computedIndex = Mathf.RoundToInt((bonus - 1) / 0.4f);
         while (computedIndex >= allColors.Length)
         {
