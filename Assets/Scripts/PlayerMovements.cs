@@ -54,15 +54,7 @@ public class PlayerMovements : MonoBehaviour
 
     private void Move()
     {
-        if (slowFactor > 0)
-        {
-            slowFactor -= Time.deltaTime * 10;
-            Debug.Log("slow factor: " + slowFactor);
-        }
-        else
-        {
-            slowFactor = 0;
-        }
+        slowFactor = slowFactor > 0 ? slowFactor - Time.deltaTime * 10 : 0;
         if (controller.isGrounded && verticalVelocity < 0)
             verticalVelocity = 0f;
         verticalVelocity -= gravityValue * Time.deltaTime * mass;

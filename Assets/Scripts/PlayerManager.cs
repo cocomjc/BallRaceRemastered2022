@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
 {
     private RoadsManager roadsManager;
     private GameManager gameManager;
+    [SerializeField] private ShieldBehavior shield;
     [SerializeField] private CinemachineVirtualCamera followingCam;
     [SerializeField] private CinemachineVirtualCamera endCam;
     [SerializeField] private TextMeshProUGUI lifesText;
@@ -78,7 +79,7 @@ public class PlayerManager : MonoBehaviour
             if (lifes < 1)
             {
                 other.gameObject.GetComponent<EndBonus>().TriggerBonus();
-                StartCoroutine(GoToEndMenu(3f));
+                StartCoroutine(GoToEndMenu(4.5f));
                 GetComponent<PlayerMovements>().SetPaused(true);
             }
         }
@@ -105,6 +106,7 @@ public class PlayerManager : MonoBehaviour
                 hit.gameObject.GetComponent<BarrierBehavior>().BurstBarrier();
                 GetComponent<PlayerMovements>().SlowPlayer();
                 invincibility = true;
+                shield.EnableShield();
                 StartCoroutine(InvincibilityTimer(.2f));
             }
             else if (gameManager.GetGameState() == GameState.Game)

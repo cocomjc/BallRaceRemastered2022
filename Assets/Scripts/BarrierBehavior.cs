@@ -11,7 +11,7 @@ public class BarrierBehavior : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-10f, 10f), impactPower/3, impactPower), ForceMode.Impulse);
-        GetComponent<AudioSource>().Play();
+        //GetComponent<AudioSource>().Play();
         RemoveBarrier(1f);
     }
 

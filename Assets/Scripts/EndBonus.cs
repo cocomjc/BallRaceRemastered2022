@@ -5,6 +5,8 @@ using TMPro;
 
 public class EndBonus : MonoBehaviour
 {
+    [SerializeField] private AudioClip hit;
+    [SerializeField] private AudioClip applause;
     [SerializeField] private ParticleSystem confettisR;
     [SerializeField] private ParticleSystem confettisL;
     [SerializeField] private TextMeshProUGUI bonusText;
@@ -35,6 +37,8 @@ public class EndBonus : MonoBehaviour
         endTrigger = true;
         confettisR.Play();
         confettisL.Play();
+        GetComponent<AudioSource>().pitch = 1f;
+        GetComponent<AudioSource>().PlayOneShot(applause);
     }
 
     private void Update()
@@ -57,7 +61,7 @@ public class EndBonus : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GetComponent<AudioSource>().Play();
+            GetComponent<AudioSource>().PlayOneShot(hit);
         }
     }
 

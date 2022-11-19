@@ -250,6 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4016827b7cc3e6f43a779ac130491f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hit: {fileID: 8300000, guid: b888160ff6afb9b44954e08e74b48d79, type: 3}
+  applause: {fileID: 8300000, guid: 4cb3a756ab8f57040be35da38e72c300, type: 3}
   confettisR: {fileID: 6315040403140747562}
   confettisL: {fileID: 8537206068728356171}
   bonusText: {fileID: 4386769517637421453}
