@@ -10,6 +10,7 @@ TagManager:
   - Gatherable
   - FinishLine
   - EndBonus
+  - Ground
   layers:
   - Default
   - TransparentFX

@@ -11,6 +11,9 @@ public class PlayerMovements : MonoBehaviour
     private float gravityValue = 9.81f;
     private MovementState movementState = MovementState.Playing;
     private float slowFactor = 0f;
+    private bool flying = false;
+    [SerializeField] private AudioSource ballHitGround;
+    [SerializeField] private AudioSource ballRoll;
     [SerializeField] private float forwardSpeed = 20f;
     [SerializeField] private float lateralSpeed = 20f;
     [SerializeField] private float jumpForce = 15f;
@@ -33,11 +36,6 @@ public class PlayerMovements : MonoBehaviour
         playerInput.Disable();
     }
 
-    public float GetNormalizedfDirection()
-    {
-        return playerInput.Player.Move.ReadValue<Vector2>().x * (CameraSizePortrait().x / Screen.width);
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -57,11 +55,17 @@ public class PlayerMovements : MonoBehaviour
         slowFactor = slowFactor > 0 ? slowFactor - Time.deltaTime * 10 : 0;
         if (controller.isGrounded && verticalVelocity < 0)
         {
+            if (flying)
+            {
+                ballHitGround.Play();
+                flying = false;
+            }
             verticalVelocity = 0f;
             ToggleRollSound(true);
         }
         verticalVelocity -= gravityValue * Time.deltaTime * mass;
-        controller.Move(new Vector3(GetNormalizedfDirection() * lateralSpeed, verticalVelocity, 1 * (forwardSpeed - slowFactor)) * Time.deltaTime);
+        float horizontalVelocity = playerInput.Player.Move.ReadValue<Vector2>().x * lateralSpeed;
+        controller.Move(new Vector3(horizontalVelocity, verticalVelocity, forwardSpeed - slowFactor) * Time.deltaTime);
     }
 
     public void SlowPlayer() {
@@ -71,6 +75,7 @@ public class PlayerMovements : MonoBehaviour
     public void Boost()
     {
         verticalVelocity = jumpForce;
+        flying = true;
         ToggleRollSound(false);
     }
 
@@ -125,14 +130,14 @@ public class PlayerMovements : MonoBehaviour
     {
         if (toggle)
         {
-            if (!GetComponent<AudioSource>().isPlaying)
+            if (!ballRoll.isPlaying)
             {
-                GetComponent<AudioSource>().Play();
+                ballRoll.Play();
             }
         }
         else
         {
-            GetComponent<AudioSource>().Stop();
+            ballRoll.Stop();
         }
     }
 

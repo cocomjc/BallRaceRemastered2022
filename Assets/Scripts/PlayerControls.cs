@@ -43,7 +43,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""63be133b-d8e5-4f11-8d50-2f2d39ecac51"",
                     ""path"": ""<Touchscreen>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,

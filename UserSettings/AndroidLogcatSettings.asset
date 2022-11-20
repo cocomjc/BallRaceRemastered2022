@@ -1,54 +1,42 @@
 {
     "m_SelectedDeviceId": "22241FDEE002B5",
     "m_SelectedPackage": {
-        "deviceId": "22241FDEE002B5",
-        "name": "com.DefaultCompany.BallRaceRemastered2022",
-        "processId": 23886,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "22241FDEE002B5",
-            "name": "com.DefaultCompany.BallRaceRemastered2022",
-            "processId": 32381,
-            "exited": true
-        },
-        {
-            "deviceId": "22241FDEE002B5",
-            "name": "com.DefaultCompany.BallRaceRemastered2022",
-            "processId": 8717,
-            "exited": true
-        },
-        {
-            "deviceId": "22241FDEE002B5",
-            "name": "com.DefaultCompany.BallRaceRemastered2022",
-            "processId": 21013,
-            "exited": true
-        },
-        {
-            "deviceId": "22241FDEE002B5",
-            "name": "com.DefaultCompany.BallRaceRemastered2022",
-            "processId": 28073,
-            "exited": true
-        },
-        {
-            "deviceId": "22241FDEE002B5",
-            "name": "com.DefaultCompany.BallRaceRemastered2022",
-            "processId": 18181,
+            "name": "com.google.android.apps.nexuslauncher",
+            "processId": 3039,
             "exited": false
         },
         {
             "deviceId": "22241FDEE002B5",
             "name": "com.DefaultCompany.BallRaceRemastered2022",
-            "processId": 22360,
-            "exited": false
+            "processId": 14507,
+            "exited": true
         },
         {
             "deviceId": "22241FDEE002B5",
             "name": "com.DefaultCompany.BallRaceRemastered2022",
-            "processId": 23886,
-            "exited": false
+            "processId": 15094,
+            "exited": true
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 15691,
+            "exited": true
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 16937,
+            "exited": true
         }
     ],
     "m_Tags": {
