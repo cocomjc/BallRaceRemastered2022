@@ -38,6 +38,7 @@ public class EndBonus : MonoBehaviour
         confettisR.Play();
         confettisL.Play();
         GetComponent<AudioSource>().pitch = 1f;
+        GetComponent<AudioSource>().volume = 0.7f;
         GetComponent<AudioSource>().PlayOneShot(applause);
     }
 

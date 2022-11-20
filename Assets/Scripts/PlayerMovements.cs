@@ -56,7 +56,10 @@ public class PlayerMovements : MonoBehaviour
     {
         slowFactor = slowFactor > 0 ? slowFactor - Time.deltaTime * 10 : 0;
         if (controller.isGrounded && verticalVelocity < 0)
+        {
             verticalVelocity = 0f;
+            ToggleRollSound(true);
+        }
         verticalVelocity -= gravityValue * Time.deltaTime * mass;
         controller.Move(new Vector3(GetNormalizedfDirection() * lateralSpeed, verticalVelocity, 1 * (forwardSpeed - slowFactor)) * Time.deltaTime);
     }
@@ -68,6 +71,7 @@ public class PlayerMovements : MonoBehaviour
     public void Boost()
     {
         verticalVelocity = jumpForce;
+        ToggleRollSound(false);
     }
 
     public void SetPaused(bool paused)
@@ -76,11 +80,13 @@ public class PlayerMovements : MonoBehaviour
         {
             movementState = MovementState.Paused;
             playerInput.Disable();
+            ToggleRollSound(false);
         }
         else
         {
             movementState = MovementState.Playing;
             playerInput.Enable();
+            ToggleRollSound(true);
         }
     }
 
@@ -113,6 +119,21 @@ public class PlayerMovements : MonoBehaviour
             return new Vector2(Camera.main.orthographicSize * 2 / 19 * 9, Camera.main.orthographicSize * 2);
         }
         else /*Debug.Log("Screen proportions not recognized");*/ return new Vector2(Screen.width, Screen.height);
+    }
+
+    private void ToggleRollSound(bool toggle)
+    {
+        if (toggle)
+        {
+            if (!GetComponent<AudioSource>().isPlaying)
+            {
+                GetComponent<AudioSource>().Play();
+            }
+        }
+        else
+        {
+            GetComponent<AudioSource>().Stop();
+        }
     }
 
     private enum MovementState
