@@ -11,12 +11,6 @@
         {
             "deviceId": "22241FDEE002B5",
             "name": "com.DefaultCompany.BallRaceRemastered2022",
-            "processId": 27972,
-            "exited": true
-        },
-        {
-            "deviceId": "22241FDEE002B5",
-            "name": "com.DefaultCompany.BallRaceRemastered2022",
             "processId": 32381,
             "exited": true
         },
@@ -30,6 +24,12 @@
             "deviceId": "22241FDEE002B5",
             "name": "com.DefaultCompany.BallRaceRemastered2022",
             "processId": 21013,
+            "exited": true
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 28073,
             "exited": true
         }
     ],
