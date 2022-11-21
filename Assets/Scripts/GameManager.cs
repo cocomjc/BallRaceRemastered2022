@@ -10,10 +10,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private int initShields = 3;
     private float lastRunBonus = 1;
     private int lastRunDiamonds = 0;
+    private GameObject playerSkin = null;
 
     protected override void Awake()
     {
-        base.Awake();
+        base.Awake(); 
         if (resetEachLaunchMode)
         {
             PlayerPrefs.DeleteAll();
@@ -35,6 +36,7 @@ public class GameManager : Singleton<GameManager>
         }
         SceneManager.LoadScene("GameScene", LoadSceneMode.Additive);
         SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
+        // SET PLAYER SKIN FROM LAST SKIN
     }
 
     public void StartGame()
@@ -82,6 +84,15 @@ public class GameManager : Singleton<GameManager>
     public float GetLastRunBonus()
     {
         return (lastRunBonus);
+    }
+
+    public void SetSkin(GameObject skinPrefab)
+    {
+        if (playerSkin != null)
+        {
+            Destroy(playerSkin);
+        }
+        playerSkin = Instantiate(skinPrefab, GameObject.FindGameObjectsWithTag("Player")[0].transform);
     }
 }
 

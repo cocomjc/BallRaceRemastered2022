@@ -12,6 +12,7 @@ TagManager:
   - EndBonus
   - Ground
   - BossEnd
+  - PlayerSkin
   layers:
   - Default
   - TransparentFX
