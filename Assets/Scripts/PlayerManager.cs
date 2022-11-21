@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Cinemachine;
+using UnityEngine.Playables;
 
 public class PlayerManager : MonoBehaviour
 {
     private RoadsManager roadsManager;
     private GameManager gameManager;
     [SerializeField] private ShieldBehavior shield;
+    [SerializeField] private GameObject shieldUIPrefab;
+    [SerializeField] private GameObject shieldUISlot;
+    [SerializeField] private TextMeshProUGUI diamondsText;
     [SerializeField] private CinemachineVirtualCamera followingCam;
     [SerializeField] private CinemachineVirtualCamera endCam;
-    [SerializeField] private TextMeshProUGUI lifesText;
-    [SerializeField] private TextMeshProUGUI diamondsText;
-    [SerializeField] private int lifes;
+    private int runShields;
     private int runDiamonds;
     private float endBonus = 1;
     private bool invincibility = false;
@@ -23,8 +25,9 @@ public class PlayerManager : MonoBehaviour
         roadsManager = RoadsManager.GetInstance();
         gameManager = GameManager.GetInstance();
         GetComponent<PlayerMovements>().SetPaused(true);
+        runShields = PlayerPrefs.GetInt("Shields");
         UpdateDiamondsCount();
-        UpdateLifeCount();
+        UpdateShieldCount();
         CameraSwitcher.SwitchCamera(followingCam);
     }
 
@@ -61,8 +64,8 @@ public class PlayerManager : MonoBehaviour
                     UpdateDiamondsCount();
                     break;
                 case GatherableType.Life:
-                    lifes++;
-                    UpdateLifeCount();
+                    runShields++;
+                    UpdateShieldCount();
                     break;
             }
             other.GetComponent<Gatherable>().TriggerGathered();
@@ -76,7 +79,7 @@ public class PlayerManager : MonoBehaviour
         if (other.gameObject.CompareTag("EndBonus"))
         {
             endBonus = other.gameObject.GetComponent<EndBonus>().GetBonus();
-            if (lifes < 1)
+            if (runShields < 1)
             {
                 other.gameObject.GetComponent<EndBonus>().TriggerBonus();
                 StartCoroutine(GoToEndMenu(4.5f));
@@ -85,24 +88,14 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void UpdateDiamondsCount()
-    {
-        diamondsText.text = (PlayerPrefs.GetInt("Diamonds") + runDiamonds).ToString();
-    }
-
-    private void UpdateLifeCount()
-    {
-        lifesText.text = "Lifes: " + lifes;
-    }
-
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.CompareTag("Obstacle") && !invincibility)
         {
-            if (lifes >= 1)
+            if (runShields >= 1)
             {
-                lifes--;
-                UpdateLifeCount();
+                runShields--;
+                UpdateShieldCount();
                 hit.gameObject.GetComponent<BarrierBehavior>().BurstBarrier();
                 GetComponent<PlayerMovements>().SlowPlayer();
                 invincibility = true;
@@ -118,6 +111,31 @@ public class PlayerManager : MonoBehaviour
         {
             GetComponent<PlayerMovements>().Boost();
         }
+    }
+
+    private void UpdateDiamondsCount()
+    {
+        diamondsText.text = (PlayerPrefs.GetInt("Diamonds") + runDiamonds).ToString();
+    }
+
+    private void UpdateShieldCount()
+    {  
+        if (shieldUISlot.transform.childCount < runShields)
+        {
+            while (shieldUISlot.transform.childCount != runShields)
+            {  
+                Instantiate(shieldUIPrefab, shieldUISlot.transform);
+            }
+        }
+        else
+        {
+            Destroy(shieldUISlot.transform.GetChild(0).gameObject);
+        }
+    }
+
+    public void DisplayShields(bool active)
+    {
+        shieldUISlot.SetActive(active);
     }
 
     private IEnumerator InvincibilityTimer(float _delay)

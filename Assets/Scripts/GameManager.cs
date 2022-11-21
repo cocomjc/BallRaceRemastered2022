@@ -7,9 +7,9 @@ public class GameManager : Singleton<GameManager>
 {
     private GameState gameState;
     [SerializeField] private bool resetEachLaunchMode;
+    [SerializeField] private int initShields = 3;
     private float lastRunBonus = 1;
     private int lastRunDiamonds = 0;
-
 
     protected override void Awake()
     {

@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    GameManager gameManager;
+    private GameManager gameManager;
+    private PlayerManager playerManager;
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject endMenu;
     [SerializeField] private GameObject shopMenu;
@@ -15,6 +16,7 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         gameManager = GameManager.GetInstance();
+        playerManager = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerManager>();
         mainMenu.SetActive(false);
         endMenu.SetActive(false);
         shopMenu.SetActive(false);
@@ -25,6 +27,7 @@ public class MenuManager : MonoBehaviour
                 break;
             case (GameState.End):
                 endMenu.SetActive(true);
+                playerManager.DisplayShields(false);
                 break;
         }
     }
@@ -48,6 +51,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public void GoToMainMenu() {
+        playerManager.DisplayShields(true);
         gameManager.SetGameState(GameState.Menu);
         endMenu.SetActive(false);
         mainMenu.SetActive(true);
