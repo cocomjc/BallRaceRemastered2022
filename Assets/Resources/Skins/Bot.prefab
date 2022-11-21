@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinSprite: {fileID: 21300000, guid: 2671ac743cf402f44874c5a8429822af, type: 3}
+  id: Bot
 --- !u!1 &3797537173004872593
 GameObject:
   m_ObjectHideFlags: 0

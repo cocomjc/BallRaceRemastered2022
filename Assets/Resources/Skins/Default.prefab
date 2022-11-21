@@ -97,3 +97,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinSprite: {fileID: 21300000, guid: e570a4f39380f7346a9b01eccb711d4f, type: 3}
+  id: Default

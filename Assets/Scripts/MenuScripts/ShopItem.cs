@@ -6,24 +6,28 @@ using UnityEngine.UI;
 public class ShopItem : MonoBehaviour
 {
     [SerializeField] private Sprite lockedSprite;
-    private GameObject skinPrefab;
+    private SkinComponent skinPrefab;
     private bool locked = true;
-    private GameManager gameManager;
+    private SkinManager skinManager;
 
     private void Awake()
     {
-        gameManager = GameManager.GetInstance();
+        skinManager = GameObject.FindGameObjectWithTag("Player").GetComponent<SkinManager>();
         GetComponent<Image>().sprite = lockedSprite;
     }
 
     public void SetSkin(GameObject _skinPrefab)
     {
-        skinPrefab = _skinPrefab;
+        skinPrefab = _skinPrefab.GetComponent<SkinComponent>();
     }
-
+    public SkinComponent GetSkin()
+    {
+        return skinPrefab;
+    }
+    
     public void Unlock()
     {
-        GetComponent<Image>().sprite = skinPrefab.GetComponent<SkinComponent>().GetSkinSprite();
+        GetComponent<Image>().sprite = skinPrefab.GetSkinSprite();
         locked = false;
     }
 
@@ -31,7 +35,7 @@ public class ShopItem : MonoBehaviour
     {
         if (!locked)
         {
-            gameManager.SetSkin(skinPrefab);
+            skinManager.SetSkin(skinPrefab.GetId());
         }
     }
 }

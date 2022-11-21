@@ -39,13 +39,15 @@ public class MenuManager : MonoBehaviour
     }
 
     public void GoToShop()
-    {
+    {        
+        playerManager.DisplayShields(false);
         shopMenu.SetActive(true);
         Debug.Log("Going to shop");
     }
 
     public void ExitShop()
     {
+        playerManager.DisplayShields(true);
         shopMenu.SetActive(false);
         Debug.Log("Exiting shop");
     }

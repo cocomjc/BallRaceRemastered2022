@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : Singleton<GameManager>, IDataPersistence
 {
     private GameState gameState;
     [SerializeField] private bool resetEachLaunchMode;
     [SerializeField] private int initShields = 3;
     private float lastRunBonus = 1;
     private int lastRunDiamonds = 0;
-    private GameObject playerSkin = null;
+    private List<string> unlockedItems = new List<string>();
 
     protected override void Awake()
     {
@@ -21,7 +21,18 @@ public class GameManager : Singleton<GameManager>
             PlayerPrefs.SetInt("Level", 1);
         }
     }
-    
+
+    public void LoadData(GameData data)
+    {
+        PlayerPrefs.SetString("SelectedSkin", data.selectedSkin);
+        unlockedItems = data.unlockedSkin;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.selectedSkin = PlayerPrefs.GetString("SelectedSkin", "Default");
+    }
+
     private void Start()
     {
         if (!PlayerPrefs.HasKey("Shields"))
@@ -36,7 +47,7 @@ public class GameManager : Singleton<GameManager>
         }
         SceneManager.LoadScene("GameScene", LoadSceneMode.Additive);
         SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
-        // SET PLAYER SKIN FROM LAST SKIN
+
     }
 
     public void StartGame()
@@ -44,7 +55,7 @@ public class GameManager : Singleton<GameManager>
         gameState = GameState.Game;
         SceneManager.UnloadSceneAsync("MenuScene");
         //Tell player to start the game
-        GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerManager>().StartGame();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().StartGame();
     }
 
     public void ResetScene()
@@ -86,13 +97,35 @@ public class GameManager : Singleton<GameManager>
         return (lastRunBonus);
     }
 
-    public void SetSkin(GameObject skinPrefab)
+    public ShopItem UnlockItem(List<GameObject> items)
     {
-        if (playerSkin != null)
+        int rand = Random.Range(0, items.Count - unlockedItems.Count);
+        Debug.Log("Random: " + rand + " and " + (items.Count - unlockedItems.Count));
+
+        foreach (GameObject item in items)
         {
-            Destroy(playerSkin);
+            string id = item.GetComponent<ShopItem>().GetSkin().GetId();
+            if (!unlockedItems.Contains(id))
+            {
+                if (rand == 0)
+                {
+                    unlockedItems.Add(id);
+                    return (item.GetComponent<ShopItem>());
+                }
+                rand--;
+            }
         }
-        playerSkin = Instantiate(skinPrefab, GameObject.FindGameObjectsWithTag("Player")[0].transform);
+        return null;
+    }
+
+    public bool IsItemUnlocked(string id)
+    {
+        return (unlockedItems.Contains(id));
+    }
+
+    public int GetPrice()
+    {
+        return (unlockedItems.Count * 264);
     }
 }
 

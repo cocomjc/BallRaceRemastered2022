@@ -97,3 +97,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinSprite: {fileID: 21300000, guid: c7ad8c37585b23641abde27219e23117, type: 3}
+  id: GolfBall

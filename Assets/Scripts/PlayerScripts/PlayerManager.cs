@@ -120,7 +120,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void UpdateDiamondsCount()
+    public void UpdateDiamondsCount()
     {
         diamondsText.text = (PlayerPrefs.GetInt("Diamonds") + runDiamonds).ToString();
     }
