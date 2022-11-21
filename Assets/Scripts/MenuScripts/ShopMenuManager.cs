@@ -47,9 +47,9 @@ public class ShopMenuManager : MonoBehaviour
         if (PlayerPrefs.GetInt("Diamonds") >= gameManager.GetPriceSkin(shopItems.Count) && gameManager.GetPriceSkin(shopItems.Count) != 0)
         {
             PlayerPrefs.SetInt("Diamonds", PlayerPrefs.GetInt("Diamonds") - gameManager.GetPriceSkin(shopItems.Count));
-            SetPriceText();
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().UpdateDiamondsCount();
             gameManager.UnlockItem(shopItems).Unlock();
+            SetPriceText();
         }
     }
 }
