@@ -86,6 +86,12 @@ public class PlayerManager : MonoBehaviour
                 GetComponent<PlayerMovements>().SetPaused(true);
             }
         }
+        if (other.gameObject.CompareTag("BossEnd")) {
+            endBonus = other.gameObject.GetComponent<BossEnd>().GetBonus();
+            other.gameObject.GetComponent<BossEnd>().TriggerBonus();
+            StartCoroutine(GoToEndMenu(4.5f));
+            GetComponent<PlayerMovements>().SetPaused(true);
+        }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -110,6 +116,7 @@ public class PlayerManager : MonoBehaviour
         if (hit.gameObject.CompareTag("Ramp"))
         {
             GetComponent<PlayerMovements>().Boost();
+            hit.gameObject.GetComponent<AudioSource>().Play();
         }
     }
 
@@ -118,18 +125,24 @@ public class PlayerManager : MonoBehaviour
         diamondsText.text = (PlayerPrefs.GetInt("Diamonds") + runDiamonds).ToString();
     }
 
+    public void EditShields(int value)
+    {
+        runShields += value;
+        UpdateShieldCount();
+    }
+
     private void UpdateShieldCount()
-    {  
-        if (shieldUISlot.transform.childCount < runShields)
+    {
+        while (shieldUISlot.transform.childCount != runShields)
         {
-            while (shieldUISlot.transform.childCount != runShields)
-            {  
+            if (shieldUISlot.transform.childCount < runShields)
                 Instantiate(shieldUIPrefab, shieldUISlot.transform);
+            else
+            {
+                GameObject shieldToDestroy = shieldUISlot.transform.GetChild(0).gameObject;
+                shieldToDestroy.transform.SetParent(null);
+                Destroy(shieldToDestroy);
             }
-        }
-        else
-        {
-            Destroy(shieldUISlot.transform.GetChild(0).gameObject);
         }
     }
 

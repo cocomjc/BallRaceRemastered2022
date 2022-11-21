@@ -8,7 +8,10 @@ public class BarrierBehavior : MonoBehaviour
 
     public void BurstBarrier()
     {
-        GetComponent<BoxCollider>().enabled = false;
+        if (GetComponent<BoxCollider>())
+            GetComponent<BoxCollider>().enabled = false;
+        else if (GetComponent<SphereCollider>())
+            GetComponent<SphereCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-10f, 10f), impactPower/3, impactPower), ForceMode.Impulse);
         //GetComponent<AudioSource>().Play();

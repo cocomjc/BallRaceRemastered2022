@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetEachLaunchMode: 1
+  initShields: 2
 --- !u!4 &1112402608
 Transform:
   m_ObjectHideFlags: 0

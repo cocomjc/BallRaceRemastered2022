@@ -23,6 +23,10 @@ public class GameManager : Singleton<GameManager>
     
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("Shields"))
+        {
+            PlayerPrefs.SetInt("Shields", initShields);
+        }
         gameState = GameState.Menu;
         if (SceneManager.sceneCount > 1)
         {

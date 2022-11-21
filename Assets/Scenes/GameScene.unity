@@ -1543,7 +1543,6 @@ MonoBehaviour:
   shieldUIPrefab: {fileID: 5570051972233621914, guid: bdaf4ac6f56e3134f9aed5360b06a357,
     type: 3}
   shieldUISlot: {fileID: 1194107907}
-  StartingShields: 5
   diamondsText: {fileID: 719303636}
   followingCam: {fileID: 38803589}
   endCam: {fileID: 807848653}

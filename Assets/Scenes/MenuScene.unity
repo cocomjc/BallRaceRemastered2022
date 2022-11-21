@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NIVEAU SUIVANT
+  m_text: NEXT LEVEL
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9ffb426c24305bf4c84f37a17f931166, type: 2}
   m_sharedMaterial: {fileID: 112109037880875652, guid: 9ffb426c24305bf4c84f37a17f931166,
@@ -1739,6 +1739,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diamonds: {fileID: 1917377146}
+  winLose: {fileID: 181559005}
+  winLoseImage: {fileID: 940546990}
+  loseColor: {r: 1, g: 0.43867922, b: 0.43867922, a: 1}
 --- !u!1 &1026031708
 GameObject:
   m_ObjectHideFlags: 0
@@ -3404,7 +3407,7 @@ GameObject:
   - component: {fileID: 2010482993}
   - component: {fileID: 2010482996}
   m_Layer: 5
-  m_Name: OutLine
+  m_Name: OutLineButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3641,7 +3644,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Vous avez gagne :'
+  m_text: 'you have collected :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9ffb426c24305bf4c84f37a17f931166, type: 2}
   m_sharedMaterial: {fileID: 112109037880875652, guid: 9ffb426c24305bf4c84f37a17f931166,
@@ -3669,7 +3672,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.8
+  m_fontSize: 47.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

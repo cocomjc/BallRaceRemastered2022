@@ -64,7 +64,7 @@ public class PlayerMovements : MonoBehaviour
             ToggleRollSound(true);
         }
         verticalVelocity -= gravityValue * Time.deltaTime * mass;
-        float horizontalVelocity = playerInput.Player.Move.ReadValue<Vector2>().x * lateralSpeed;
+        float horizontalVelocity = Mathf.Abs(playerInput.Player.Move.ReadValue<Vector2>().x) < .1 ? 0 : playerInput.Player.Move.ReadValue<Vector2>().x * lateralSpeed;
         controller.Move(new Vector3(horizontalVelocity, verticalVelocity, forwardSpeed - slowFactor) * Time.deltaTime);
     }
 
