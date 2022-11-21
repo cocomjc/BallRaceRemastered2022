@@ -21,9 +21,6 @@ public class ShopMenuManager : MonoBehaviour
     {
         GameObject[] skinPrefabs = Resources.LoadAll<GameObject>("Skins");
         
-        priceText.text = gameManager.GetPrice().ToString();
-        if (gameManager.GetPrice() == 0)
-            priceText.transform.parent.gameObject.SetActive(false);
         foreach (GameObject skinPrefab in skinPrefabs)
         {
             shopItems.Add(Instantiate(shopItemPrefab, skinDisplay.transform));
@@ -33,15 +30,24 @@ public class ShopMenuManager : MonoBehaviour
                 shopItems[shopItems.Count - 1].GetComponent<ShopItem>().Unlock();
             }
         }
+
+        SetPriceText();
     }
 
+    private void SetPriceText()
+    {
+        if (gameManager.GetPriceSkin(shopItems.Count) == 0)
+            priceText.transform.parent.gameObject.SetActive(false);
+        else
+            priceText.text = gameManager.GetPriceSkin(shopItems.Count).ToString();
+    }
+    
     public void BuySkin()
     {
-        if (PlayerPrefs.GetInt("Diamonds") >= gameManager.GetPrice() && gameManager.GetPrice() != 0)
+        if (PlayerPrefs.GetInt("Diamonds") >= gameManager.GetPriceSkin(shopItems.Count) && gameManager.GetPriceSkin(shopItems.Count) != 0)
         {
-            Debug.Log("Bought");
-            PlayerPrefs.SetInt("Diamonds", PlayerPrefs.GetInt("Diamonds") - gameManager.GetPrice());
-            priceText.text = gameManager.GetPrice().ToString();
+            PlayerPrefs.SetInt("Diamonds", PlayerPrefs.GetInt("Diamonds") - gameManager.GetPriceSkin(shopItems.Count));
+            SetPriceText();
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().UpdateDiamondsCount();
             gameManager.UnlockItem(shopItems).Unlock();
         }

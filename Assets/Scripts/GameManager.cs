@@ -123,8 +123,10 @@ public class GameManager : Singleton<GameManager>, IDataPersistence
         return (unlockedItems.Contains(id));
     }
 
-    public int GetPrice()
+    public int GetPriceSkin(int max)
     {
+        if (unlockedItems.Count == max)
+            return 0;
         return (unlockedItems.Count * 264);
     }
 }

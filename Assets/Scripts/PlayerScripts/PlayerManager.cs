@@ -146,6 +146,12 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void ResetShield()
+    {
+        runShields = PlayerPrefs.GetInt("Shields");;
+        UpdateShieldCount();
+    }
+
     public void DisplayShields(bool active)
     {
         shieldUISlot.SetActive(active);

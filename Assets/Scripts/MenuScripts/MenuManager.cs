@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject endMenu;
     [SerializeField] private GameObject shopMenu;
     [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI priceShieldText;
 
 
     private void Awake()
@@ -30,8 +31,9 @@ public class MenuManager : MonoBehaviour
                 playerManager.DisplayShields(false);
                 break;
         }
+        SetPriceText();
     }
-    
+
     public void StartGame()
     {
         gameManager.StartGame();
@@ -64,5 +66,27 @@ public class MenuManager : MonoBehaviour
     public void GoToRemoveAds()
     {
         Debug.Log("Going to remove ads");
+    }
+    
+    private void SetPriceText()
+    {
+        priceShieldText.text = GetShieldPrice().ToString();
+    }
+
+    private int GetShieldPrice()
+    {
+        return ((PlayerPrefs.GetInt("Shields") - 1) * 384);
+    }
+
+    public void BuyShield()
+    {
+        if (PlayerPrefs.GetInt("Diamonds") >= GetShieldPrice())
+        {
+            PlayerPrefs.SetInt("Diamonds", PlayerPrefs.GetInt("Diamonds") - GetShieldPrice());
+            PlayerPrefs.SetInt("Shields", PlayerPrefs.GetInt("Shields") + 1);
+            SetPriceText();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().ResetShield();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().UpdateDiamondsCount();
+        }
     }
 }
