@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ShopItem : MonoBehaviour
 {
     [SerializeField] private Sprite lockedSprite;
+    [SerializeField] private Image previewImage;
     private SkinComponent skinPrefab;
     private bool locked = true;
     private SkinManager skinManager;
@@ -13,7 +14,19 @@ public class ShopItem : MonoBehaviour
     private void Awake()
     {
         skinManager = GameObject.FindGameObjectWithTag("Player").GetComponent<SkinManager>();
-        GetComponent<Image>().sprite = lockedSprite;
+        previewImage.sprite = lockedSprite;
+    }
+
+    private void Update()
+    {
+        if (skinManager.GetSkin() == skinPrefab.GetId())
+        {
+            GetComponent<Outline>().enabled = true;
+        }
+        else
+        {
+            GetComponent<Outline>().enabled = false;
+        }
     }
 
     public void SetSkin(GameObject _skinPrefab)
@@ -27,7 +40,7 @@ public class ShopItem : MonoBehaviour
     
     public void Unlock()
     {
-        GetComponent<Image>().sprite = skinPrefab.GetSkinSprite();
+        previewImage.sprite = skinPrefab.GetSkinSprite();
         locked = false;
     }
 

@@ -128,7 +128,13 @@ public class PlayerManager : MonoBehaviour
     public void EditShields(int value)
     {
         runShields += value;
-        UpdateShieldCount();
+        if (runShields > 0)
+            UpdateShieldCount();
+        else
+        {
+            runShields = 0;
+            gameManager.EndGame(runDiamonds, endBonus);
+        }
     }
 
     private void UpdateShieldCount()

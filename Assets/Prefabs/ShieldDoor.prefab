@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3820755, g: 0.8685092, b: 1, a: 0.6039216}
+  m_Color: {r: 1, g: 0.4198113, b: 0.50612783, a: 0.6039216}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -273,10 +273,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c099682de5629344b6576cea38ce08e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: -2
   valueText: {fileID: 3720120313938848626}
   positiveSound: {fileID: 8300000, guid: b888160ff6afb9b44954e08e74b48d79, type: 3}
   negativeSound: {fileID: 8300000, guid: 8117819ff0dc6a244a8edc54f82e4ea7, type: 3}
+  positiveColor: {r: 0.43867922, g: 1, b: 0.47389534, a: 0.6901961}
+  negativeColor: {r: 1, g: 0.3726415, b: 0.3726415, a: 0.6901961}
+  portal: {fileID: 3720120313368939883}
 --- !u!82 &3720120314866921106
 AudioSource:
   m_ObjectHideFlags: 0

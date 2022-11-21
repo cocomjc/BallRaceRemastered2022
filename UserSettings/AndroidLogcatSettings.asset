@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "22241FDEE002B5",
         "name": "com.DefaultCompany.BallRaceRemastered2022",
-        "processId": 29836,
+        "processId": 27274,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -60,6 +60,12 @@
             "deviceId": "22241FDEE002B5",
             "name": "com.DefaultCompany.BallRaceRemastered2022",
             "processId": 29836,
+            "exited": false
+        },
+        {
+            "deviceId": "22241FDEE002B5",
+            "name": "com.DefaultCompany.BallRaceRemastered2022",
+            "processId": 27274,
             "exited": false
         }
     ],
